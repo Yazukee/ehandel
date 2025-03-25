@@ -35,9 +35,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.18.0",
+    "autoprefixer": "^10.4.21",
     "bufferutil": "^4.0.9",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
