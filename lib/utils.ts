@@ -17,7 +17,7 @@ export function fromatNumberWithDecimal(num: number): string {
 }
 
 // format errors
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 import { ZodError } from "zod";
 import { Prisma } from "@prisma/client";
 
