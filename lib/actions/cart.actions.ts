@@ -45,7 +45,7 @@ export async function addItemToCart(data: CartItem) {
 
     // Find product in database
     const product = await prisma.product.findFirst({
-      where: { name: item.productId },
+      where: { id: item.productId },
     });
 
     if (!product) throw new Error("Product not found");
