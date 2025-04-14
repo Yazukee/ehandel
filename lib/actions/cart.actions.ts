@@ -174,15 +174,14 @@ export async function removeItemFromCart(productId: string) {
         exist.qty - 1;
 
       //Update cart in database
-
-      await prisma.cart.update({
-        where: { id: cart.id },
-        data: {
-          items: cart.items as Prisma.CartUpdateitemsInput[],
-          ...calcPrice(cart.items as CartItem[]),
-        },
-      });
     }
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: {
+        items: cart.items as Prisma.CartUpdateitemsInput[],
+        ...calcPrice(cart.items as CartItem[]),
+      },
+    });
     revalidatePath(`/product/${product.slug}`);
 
     return {
