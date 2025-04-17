@@ -1,12 +1,12 @@
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
-import { useTransition } from "react";
+import { startTransition, useTransition } from "react";
 import { shippingAddress } from "@/types";
 import { shippingAddressSchema } from "@/lib/validators";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { ControllerRenderProps, useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { shippingAddressDefaultValues } from "@/lib/constants";
 import {
@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader } from "lucide-react";
+import { updateUserAddress } from "@/lib/actions/user.actions";
 
 const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
   const router = useRouter();
@@ -27,7 +28,22 @@ const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (values) => {};
+  const onSubmit: SubmitHandler<z.infer<typeof shippingAddressSchema>> = async (
+    values
+  ) => {
+    startTransition(async () => {
+      const res = await updateUserAddress(values);
+      if (!res.success) {
+        toast({
+          variant: "destructive",
+          description: res.message,
+        });
+        return;
+      }
+      router.push("/payment-method");
+    });
+  };
+
   // Innan deploy ta bort shippingAddressDefaultValues
   const form = useForm<z.infer<typeof shippingAddressSchema>>({
     resolver: zodResolver(shippingAddressSchema),
@@ -143,7 +159,7 @@ const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
               }: {
                 field: ControllerRenderProps<
                   z.infer<typeof shippingAddressSchema>,
-                  "postalCode"
+                  "country"
                 >;
               }) => (
                 <FormItem className="w-full">
@@ -156,7 +172,7 @@ const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
               )}
             />
           </div>
-          <div className="flaex gap-2">
+          <div className="flex gap-2">
             <Button type="submit" disabled={isPending}>
               {isPending ? (
                 <Loader className="w-4, h-4 animate-spin" />
