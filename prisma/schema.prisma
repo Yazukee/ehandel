@@ -33,7 +33,6 @@ model User {
   image         String?
   password      String?
   role          String    @default("user")
-  // Undantag på den under alla address skrivs så förutom den som adress
   address       Json?     @db.Json
   paymentMethod String?
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
