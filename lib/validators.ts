@@ -24,7 +24,7 @@ export const insertProductSchema = z.object({
 
 // Schema for signing users in
 export const signInFormSchema = z.object({
-  email: z.string().email("Invaild email adress"),
+  email: z.string().email("Invaild email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -33,7 +33,7 @@ export const signInFormSchema = z.object({
 export const signUpFormSchema = z
   .object({
     name: z.string().min(3, "Name must be at least 3 characters"),
-    email: z.string().email("Invaild email adress"),
+    email: z.string().email("Invaild email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z
       .string()
@@ -62,4 +62,15 @@ export const insertCartSchema = z.object({
   taxPrice: currency,
   sessionCartId: z.string().min(1, "Session cart id is required"),
   userId: z.string().optional().nullable(),
+});
+
+/// Schema for the Shipping Address
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(3, "Name must be at least 3 characthers"),
+  streetAddress: z.string().min(3, "Address must be at least 3 characthers"),
+  city: z.string().min(3, "City must be at least 3 characthers"),
+  postalCode: z.string().min(3, "Postal code must be at least 3 characthers"),
+  country: z.string().min(3, "Country must be at least 3 characters"),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
 });

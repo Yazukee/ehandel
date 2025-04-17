@@ -17,3 +17,11 @@ export const signUpDefaultValues = {
   password: "",
   confirmPassword: "",
 };
+
+export const shippingAddressDefaultValues = {
+  fullName: "Yaser OG",
+  streetAddress: "Strandvägen 7",
+  city: "Stockholm",
+  postalCode: "128 35",
+  country: "Sweden",
+};
