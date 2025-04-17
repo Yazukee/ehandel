@@ -15,11 +15,13 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const router = useRouter();
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
+
   return (
     <>
       <h1 className="py-2 h2-bold">Shopping Cart</h1>
@@ -42,15 +44,75 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                 {cart.items.map((item) => (
                   <TableRow key={item.slug}>
                     <TableCell>
-                      <Link href={`/product/${item.slug}`} className="flex">
-                        <Image
-                          src={item.images}
-                          alt={item.name}
-                          width={50}
-                          height={50}
-                        />
+                      <Link
+                        href={`/product/${item.slug}`}
+                        className="flex items-center"
+                      >
+                        {item.image && item.image.length > 0 ? (
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={50}
+                            height={50}
+                          />
+                        ) : (
+                          <div className="w-[50px] h-[50px] bg-gray-100 rounded" />
+                        )}
+                        <span className="px-2">{item.name}</span>
                       </Link>
                     </TableCell>
+                    <TableCell className="flex-center gap-2">
+                      <Button
+                        disabled={isPending}
+                        variant="outline"
+                        type="button"
+                        onClick={() =>
+                          startTransition(async () => {
+                            const res = await removeItemFromCart(
+                              item.productId
+                            );
+
+                            if (!res.success) {
+                              toast({
+                                variant: "destructive",
+                                description: res.message,
+                              });
+                            }
+                          })
+                        }
+                      >
+                        {isPending ? (
+                          <Loader className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Minus className="w-4 h-4" />
+                        )}
+                      </Button>
+                      <span>{item.qty}</span>
+                      <Button
+                        disabled={isPending}
+                        variant="outline"
+                        type="button"
+                        onClick={() =>
+                          startTransition(async () => {
+                            const res = await addItemToCart(item);
+
+                            if (!res.success) {
+                              toast({
+                                variant: "destructive",
+                                description: res.message,
+                              });
+                            }
+                          })
+                        }
+                      >
+                        {isPending ? (
+                          <Loader className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Plus className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </TableCell>
+                    <TableCell className="text-center">£{item.price}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

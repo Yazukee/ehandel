@@ -50,6 +50,9 @@ export async function addItemToCart(data: CartItem) {
 
     if (!product) throw new Error("Product not found");
 
+    // to image in item
+    item.image = product.images[0] || "";
+
     if (!cart) {
       // Create new cart Obj
       const newCart = insertCartSchema.parse({
