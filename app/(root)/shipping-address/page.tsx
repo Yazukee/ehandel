@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { shippingAddress } from "@/types";
 import { getUserById } from "@/lib/actions/user.actions";
 import ShippingAddressForm from "./shipping-address-form";
+import CheckoutSteps from "@/components/ui/shared/checkout-steps";
 
 /// Fliknamnet shipping address när man trycker på proceed
 
@@ -27,6 +28,7 @@ const ShippingAddressPage = async () => {
 
   return (
     <>
+      <CheckoutSteps current={1} />
       <ShippingAddressForm address={user.address as shippingAddress} />
     </>
   );
