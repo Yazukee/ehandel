@@ -14,10 +14,10 @@ export async function createOrder() {
   try {
     const session = await auth();
     if (!session) throw new Error("User not authenticated");
-    const cart = await getMyCart();
 
+    const cart = await getMyCart();
     const userId = session?.user?.id;
-    if (!session) throw new Error("User not found");
+    if (!userId) throw new Error("User not found");
 
     const user = await getUserById(userId);
 
@@ -84,7 +84,7 @@ export async function createOrder() {
       });
       return insertedOrder.id;
     });
-    if (!insertedOrderId) throw new Error("Odreder not created");
+    if (!insertedOrderId) throw new Error("Order not created");
     return {
       success: true,
       message: "Order created",
