@@ -70,3 +70,10 @@ export function formatCurrency(amount: number | string | null) {
     return "NaN";
   }
 }
+
+// shorten UUID
+export function formatId(id: string) {
+  return `..${id.substring(id.length - 6)}`;
+}
+
+// format date and time
