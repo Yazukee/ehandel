@@ -14,12 +14,13 @@ import { formatCurrency, formatId } from "@/lib/utils";
 import { Order } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
+import { formatDateTime } from "@/lib/utils";
 
 const OrderDetailsTable = ({ order }: { order: Order }) => {
   const {
     id,
     shippingAddress,
-    orderitems,
+    orderItems,
     itemsPrice,
     shippingPrice,
     taxPrice,
@@ -41,7 +42,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
               <p className="mb-2">{paymentMethod}</p>
               {isPaid ? (
                 <Badge variant="secondary">
-                  Paid at {FormatDateTime(paidAt!)}.dateTime
+                  Paid at {formatDateTime(paidAt!).dateTime}
                 </Badge>
               ) : (
                 <Badge variant="destructive">Not Paid</Badge>
@@ -58,7 +59,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
               </p>
               {isDelivered ? (
                 <Badge variant="secondary">
-                  Paid at {FormatDateTime(deliveredAt!)}.dateTime
+                  Paid at {formatDateTime(deliveredAt!).dateTime}
                 </Badge>
               ) : (
                 <Badge variant="destructive">Not Delivered</Badge>
@@ -77,7 +78,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {orderitems.map((item) => (
+                  {orderItems.map((item) => (
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
