@@ -12,6 +12,7 @@ import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
 import { shippingAddress } from "@/types";
 import { z } from "zod";
+import { getMyCart } from "./cart.actions";
 
 /// Sign in the user with credentials
 export async function signInWithCredentials(
@@ -35,17 +36,23 @@ export async function signInWithCredentials(
 
 // sign user out
 export async function signOutUser() {
+  const currentCart = await getMyCart();
+  if (currentCart?.id) {
+    await prisma.cart.delete({ where: { id: currentCart.id } });
+  } else {
+    console.warn("No cart found for deletion.");
+  }
   await signOut();
 }
 
 // Sign up User
-export async function signUpUser(prevState: unknown, fromData: FormData) {
+export async function signUpUser(prevState: unknown, formData: FormData) {
   try {
     const user = signUpFormSchema.parse({
-      name: fromData.get("name"),
-      email: fromData.get("email"),
-      password: fromData.get("password"),
-      confirmPassword: fromData.get("confirmPassword"),
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
     });
 
     const plainPassword = user.password;
@@ -62,7 +69,7 @@ export async function signUpUser(prevState: unknown, fromData: FormData) {
       email: user.email,
       password: plainPassword,
     });
-    return { success: true, message: " User registred succeccfully" };
+    return { success: true, message: " User registred successfully" };
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;

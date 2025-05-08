@@ -7,6 +7,7 @@ import { authConfig } from "./auth.config";
 import { cookies } from "next/headers";
 
 export const config = {
+  // Kanske en authConfig.callbacks.
   ...authConfig,
   adapter: PrismaAdapter(prisma),
   session: {
@@ -20,20 +21,20 @@ export const config = {
         password: { type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials) return null;
+        if (credentials === null) return null;
 
         const user = await prisma.user.findFirst({
           where: {
             email: credentials.email as string,
           },
         });
-
+        /// Check if user exists and if the password matches
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
             user.password
           );
-
+          // If password is correct, return user
           if (isMatch) {
             return {
               id: user.id,
@@ -43,7 +44,7 @@ export const config = {
             };
           }
         }
-
+        // If user does not exist or password does not match return null
         return null;
       },
     }),

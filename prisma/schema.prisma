@@ -29,7 +29,7 @@ model Product {
 model User {
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String    @default("NO_NAME")
-  email         String    @unique(map: "user_email_idc")
+  email         String    @unique(map: "user_email_idx")
   emailVerified DateTime? @db.Timestamp(6)
   image         String?
   password      String?
@@ -38,9 +38,9 @@ model User {
   paymentMethod String?
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
-  Account       Account[]
+  account       Account[]
+  session       Session[]
   Cart          Cart[]
-  Session       Session[]
   Order         Order[]
 }
 
@@ -108,7 +108,7 @@ model Order {
   isDelivered     Boolean     @default(false)
   deliveredAt     DateTime?   @db.Timestamp(6)
   createdAt       DateTime    @default(now()) @db.Timestamp(6)
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_userId_user_id_fk")
   orderitems      OrderItem[]
 }
 
@@ -120,8 +120,8 @@ model OrderItem {
   name      String
   slug      String
   image     String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orderItems_orderId_order_id_fk")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orderItems_productId_product_id_fk")
 
-  @@id([orderId, productId], map: "orderitems_orderId_productId_pk")
+  @@id([orderId, productId], map: "orderItems_orderId_productId_pk")
 }

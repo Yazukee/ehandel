@@ -39,7 +39,6 @@ export const authConfig = {
 
         return response;
       }
-
       return true;
     },
   },
