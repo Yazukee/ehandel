@@ -19,11 +19,11 @@ export const signUpDefaultValues = {
 };
 
 export const shippingAddressDefaultValues = {
-  fullName: "Yaser OG",
-  streetAddress: "Strandvägen 7",
-  city: "Stockholm",
-  postalCode: "128 35",
-  country: "Sweden",
+  fullName: "",
+  streetAddress: "",
+  city: "",
+  postalCode: "",
+  country: "",
 };
 
 export const PAYMENT_METHODS = process.env.PAYMENT_METHODS

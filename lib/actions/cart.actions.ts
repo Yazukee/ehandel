@@ -154,13 +154,13 @@ export async function removeItemFromCart(productId: string) {
     const product = await prisma.product.findFirst({
       where: { id: productId },
     });
-    if (!product) throw new Error(" Product or found");
+    if (!product) throw new Error(" Product not found");
 
     const cart = await getMyCart();
-    if (!cart) throw new Error(" cart not found");
+    if (!cart) throw new Error(" Cart not found");
 
     // check for item
-    const exist = (cart.items as CartItem[]).findLast(
+    const exist = (cart.items as CartItem[]).find(
       (x) => x.productId === productId
     );
     if (!exist) throw new Error("Item not found");
@@ -169,7 +169,7 @@ export async function removeItemFromCart(productId: string) {
     if (exist.qty === 1) {
       // Remove from cart
       cart.items = (cart.items as CartItem[]).filter(
-        (x) => x.productId! !== exist.productId
+        (x) => x.productId !== exist.productId
       );
     } else {
       // Decrease qty

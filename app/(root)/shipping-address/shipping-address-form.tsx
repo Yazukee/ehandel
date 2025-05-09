@@ -1,7 +1,7 @@
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
-import { startTransition, useTransition } from "react";
+import { useTransition } from "react";
 import { shippingAddress } from "@/types";
 import { shippingAddressSchema } from "@/lib/validators";
 import { useRouter } from "next/navigation";
@@ -62,7 +62,7 @@ const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
           className="space-y-4"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div className="flex-col md:flex-row gap-5">
+          <div className="flex flex-col md:flex-row gap-5">
             <FormField
               control={form.control}
               name="fullName"
@@ -177,7 +177,7 @@ const ShippingAddressForm = ({ address }: { address: shippingAddress }) => {
               {isPending ? (
                 <Loader className="w-4, h-4 animate-spin" />
               ) : (
-                <ArrowRight className="w-4 h-4 an" />
+                <ArrowRight className="w-4 h-4" />
               )}{" "}
               Continue
             </Button>
