@@ -7,13 +7,15 @@ import { authConfig } from "./auth.config";
 import { cookies } from "next/headers";
 
 export const config = {
-  // Kanske en authConfig.callbacks.
-  ...authConfig,
-  adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/sign-in",
+    error: "/sign-in",
+  },
   session: {
     strategy: "jwt" as const,
     maxAge: 30 * 24 * 60 * 60,
   },
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       credentials: {
