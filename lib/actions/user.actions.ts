@@ -1,6 +1,6 @@
 "use server";
 import {
-  PaymentMethodSchema,
+  paymentMethodSchema,
   shippingAddressSchema,
   signInFormSchema,
   signUpFormSchema,
@@ -116,7 +116,7 @@ export async function updateUserAddress(data: shippingAddress) {
 
 // Update user's payment method
 export async function updateUserPaymentMethod(
-  data: z.infer<typeof PaymentMethodSchema>
+  data: z.infer<typeof paymentMethodSchema>
 ) {
   try {
     const session = await auth();
@@ -125,7 +125,7 @@ export async function updateUserPaymentMethod(
     });
     if (!currentUser) throw Error("User not found");
 
-    const paymentMethod = PaymentMethodSchema.parse(data);
+    const paymentMethod = paymentMethodSchema.parse(data);
     await prisma.user.update({
       where: { id: currentUser.id },
       data: { paymentMethod: paymentMethod.type },

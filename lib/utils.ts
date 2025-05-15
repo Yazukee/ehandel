@@ -11,7 +11,7 @@ export function convertToPlainObject<T>(value: T): T {
 }
 
 // formatera number till decimaler
-export function fromatNumberWithDecimal(num: number): string {
+export function formatNumberWithDecimal(num: number): string {
   const [int, decimal] = num.toString().split(".");
   return decimal ? `${int}.${decimal.padEnd(2, "0")}` : `${int}.00`;
 }
