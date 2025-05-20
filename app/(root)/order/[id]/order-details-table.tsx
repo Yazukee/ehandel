@@ -20,7 +20,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
   const {
     id,
     shippingAddress,
-    orderItems,
+    orderitems,
     itemsPrice,
     shippingPrice,
     taxPrice,
@@ -35,7 +35,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
     <>
       <h1 className="py-4 text-2xl">Order {formatId(id)}</h1>
       <div className="grid md:grid-cols-3 md:gap-5">
-        <div className="col span-2 space-4-y overflow-x-auto">
+        <div className="col-span-2 space-4-y overflow-x-auto">
           <Card>
             <CardContent className="p-4 gap-4">
               <h2 className="text-xl pb-4">Payment Method</h2>
@@ -68,7 +68,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
           </Card>
           <Card>
             <CardContent className="p-4 gap-4">
-              <h2 className="text-cl pb-4">Order Items</h2>
+              <h2 className="text-xl pb-4">Order Items</h2>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -78,7 +78,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {orderItems.map((item) => (
+                  {orderitems.map((item) => (
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
@@ -97,7 +97,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
                       <TableCell>
                         <span className="px-2">{item.qty}</span>
                       </TableCell>
-                      <TableCell className="text-right">{item.price}</TableCell>
+                      <TableCell className="text-left">{item.price}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
