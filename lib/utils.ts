@@ -79,39 +79,46 @@ export function formatId(id: string) {
 // format date and time
 export const formatDateTime = (dateString: Date) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    year: "numeric", // abbreviated month name (e.g., 'Oct')
-    day: "numeric", // numeric day of the month (e.g., '25')
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: false, // use 12-hour clock (true) or 24-hour clock (false)
+    month: "short", // t.ex. 'maj'
+    year: "numeric", // t.ex. '2025'
+    day: "numeric", // t.ex. '24'
+    hour: "numeric", // t.ex. '14'
+    minute: "numeric", // t.ex. '30'
+    hour12: false, // 24-timmarsformat
+    timeZone: "Europe/Stockholm", // viktigt om servern är i annan zon
   };
+
   const dateOptions: Intl.DateTimeFormatOptions = {
-    weekday: "short", // abbreviated weekday name (e.g., 'Mon')
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    year: "numeric", // numeric year (e.g., '2023')
-    day: "numeric", // numeric day of the month (e.g., '25')
+    weekday: "short", // t.ex. 'fre'
+    month: "short",
+    year: "numeric",
+    day: "numeric",
+    timeZone: "Europe/Stockholm",
   };
+
   const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: false, // use 12-hour clock (true) or 24-hour clock (false)
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+    timeZone: "Europe/Stockholm",
   };
+
   const formattedDateTime: string = new Date(dateString).toLocaleString(
-    "'sv-SE'",
+    "sv-SE",
     dateTimeOptions
   );
   const formattedDate: string = new Date(dateString).toLocaleString(
-    "'sv-SE'",
+    "sv-SE",
     dateOptions
   );
   const formattedTime: string = new Date(dateString).toLocaleString(
-    "'sv-SE'",
+    "sv-SE",
     timeOptions
   );
+
   return {
-    dateTime: formattedDateTime,
-    dateOnly: formattedDate,
-    timeOnly: formattedTime,
+    dateTime: formattedDateTime, // ex: "24 maj 2025 14:30"
+    dateOnly: formattedDate, // ex: "fre 24 maj 2025"
+    timeOnly: formattedTime, // ex: "14:30"
   };
 };
