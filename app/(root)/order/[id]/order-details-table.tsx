@@ -97,7 +97,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
                       <TableCell>
                         <span className="px-2">{item.qty}</span>
                       </TableCell>
-                      <TableCell className="text-left">{item.price}</TableCell>
+                      <TableCell className="text-left">${item.price}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
